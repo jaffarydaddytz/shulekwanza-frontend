@@ -4,7 +4,9 @@
 
 ## Tech Stack
 
-In the project directory, you can run:
+* React JS
+* Joy MUI
+* Typescript
 
 ## Live DEMO
 [live demo here](https://shulekwanza-frontend.vercel.app/)
