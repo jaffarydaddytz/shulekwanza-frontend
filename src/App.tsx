@@ -1,18 +1,23 @@
 import * as React from 'react'
-import { CssVarsProvider } from '@mui/joy/styles'
-import CssBaseline from '@mui/joy/CssBaseline'
-import Box from '@mui/joy/Box'
-import Sidebar from './components/Sidebar'
-import Header from './components/Header'
-import Page from './components/Page'
 import RoutesContainer from './routes/Routes'
+import Loader from './components/Loader';
 
 export default function JoyOrderDashboardTemplate () {
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false); // Stop loading after 3 seconds
+    }, 3000);
+
+    // Cleanup timeout on component unmount
+    return () => clearTimeout(timer);
+  }, []);
   return (
 
 <>
 
-<RoutesContainer />
+{isLoading ? <Loader /> : <RoutesContainer />}
 
 </>
   )
