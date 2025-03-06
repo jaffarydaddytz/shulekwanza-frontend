@@ -3,9 +3,55 @@ import React from 'react'
 import { schoolimage } from '../../../assets'
 import { AddIcCallOutlined } from '@mui/icons-material'
 import AddIcon from '@mui/icons-material/Add';
-
+import Stepper from '@mui/joy/Stepper';
+import Step from '@mui/joy/Step';
+import StepIndicator from '@mui/joy/StepIndicator';
 
 const AdminSchoolPage = () => {
+
+
+
+      const StepperForm = () => {
+        return (
+            <Stepper sx={{ width: '100%' }}>
+            <Step
+              orientation="vertical"
+              indicator={
+                <StepIndicator variant="solid" color="neutral">
+                  1
+                </StepIndicator>
+              }
+            >
+              Order placed
+
+              <Box>hey</Box>
+            </Step>
+            <Step
+              orientation="vertical"
+              indicator={<StepIndicator variant="outlined">2</StepIndicator>}
+            >
+              In review
+              <Box>heyo</Box>
+            </Step>
+            <Step orientation="vertical" indicator={<StepIndicator>3</StepIndicator>}>
+              Approved
+            </Step>
+          </Stepper>
+        );
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
   <Container>
 
@@ -27,6 +73,8 @@ const AdminSchoolPage = () => {
     </Box>
 
 </Card>
+
+<StepperForm />
 
   </Container>
   )
