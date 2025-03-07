@@ -24,9 +24,11 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth', // Slice name
   initialState, // Initial state
+
+
   reducers: {
     // Set the status to 'pending' when login starts
-    loginUser(state, action:PayloadAction<{email:string; password:string}>) {
+    loginUser(state, action: PayloadAction<{ email: string; password: string }>) {
       state.status = 'pending';
     },
     // Update user data and set status to 'complete' on successful login
@@ -41,14 +43,23 @@ const authSlice = createSlice({
       state.error = action.payload;
       state.status = 'failed';
     },
+
+
+
+    logoutUser(state){
+      state.user = null;
+      state.error = null;
+      state.status = 'idle';
+      localStorage.clear();
+    }
   },
 });
 
 // Export the reducer functions as actions
-export const { 
-  loginUser, 
-  loginUserSuccess, 
-  loginUserFailure 
+export const {
+  loginUser,
+  loginUserSuccess,
+  loginUserFailure
 } = authSlice.actions;
 
 // Export the reducer function itself

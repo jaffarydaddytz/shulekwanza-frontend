@@ -1,5 +1,6 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
-import React from 'react';
+import { Navigate, Route, Routes, Outlet } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
 
 /* IMPORT ROUTES */
 import {
@@ -11,7 +12,7 @@ import {
   NAVIGATE_TO_ADMINTEACHERPAGE,
   NAVIGATE_TO_STUDENTDASHBOARD,
   NAVIGATE_TO_LOGINPAGE,
-} from './types';
+} from "./types";
 import {
   AdminCaPage,
   AdminDashboard,
@@ -19,45 +20,49 @@ import {
   AdminSchoolPage,
   AdminStudentPage,
   AdminTeacherPage,
-  LoginPage
-} from '../pages';
-import Layout from '../components/Layout';
+  LoginPage,
+} from "../pages";
+import Layout from "../components/Layout";
 
+const ProtectedRoute = () => {
+  const user = useSelector((state: any) => state.auth?.user?.user ?? null);
 
-/* Check if the user is logged in */
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-    const isLoggedIn = localStorage.getItem('isLogged'); // Check if logged in
-    console.log('logged in status',isLoggedIn); 
-
-    // If the user is not logged in, navigate to login page
-    if (!isLoggedIn) {
-      return <Navigate to={NAVIGATE_TO_LOGINPAGE} replace />;
-    }
-  
-    // If the user is logged in, render the children
-    return <>{children}</>;
-  };
+  return user ? <Outlet /> : <Navigate to={NAVIGATE_TO_LOGINPAGE} replace />;
+};
 
 /* Group of protected routes */
 const RoutesContainer = () => {
   return (
     <Routes>
-
-        {/* Public route (Login page doesn't need Layout) */}
+      {/* Public route (Login page doesn't need Layout) */}
       <Route path={NAVIGATE_TO_LOGINPAGE} element={<LoginPage />} />
 
-
-      <Route path="/" element={<Layout />}>
-      <Route index element={<Navigate to={NAVIGATE_TO_ADMINDASHBOARD} replace />} />
-              <Route path={NAVIGATE_TO_ADMINDASHBOARD} element={<AdminDashboard />} />
-              <Route path={NAVIGATE_TO_ADMINSCHOOL} element={<AdminSchoolPage />} />
-              <Route path={NAVIGATE_TO_STUDENTDASHBOARD} element={<AdminStudentPage />} />
-              <Route path={NAVIGATE_TO_ADMINRESULTS} element={<AdminResultsPage />} />
-              <Route path={NAVIGATE_TO_ADMINCA} element={<AdminCaPage />} />
-              <Route path={NAVIGATE_TO_ADMINTEACHERPAGE} element={<AdminTeacherPage />} />
-          
-  
-
+      {/* Protected Routes */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Layout />}>
+          <Route
+            index
+            element={<Navigate to={NAVIGATE_TO_ADMINDASHBOARD} replace />}
+          />
+          <Route
+            path={NAVIGATE_TO_ADMINDASHBOARD}
+            element={<AdminDashboard />}
+          />
+          <Route path={NAVIGATE_TO_ADMINSCHOOL} element={<AdminSchoolPage />} />
+          <Route
+            path={NAVIGATE_TO_STUDENTDASHBOARD}
+            element={<AdminStudentPage />}
+          />
+          <Route
+            path={NAVIGATE_TO_ADMINRESULTS}
+            element={<AdminResultsPage />}
+          />
+          <Route path={NAVIGATE_TO_ADMINCA} element={<AdminCaPage />} />
+          <Route
+            path={NAVIGATE_TO_ADMINTEACHERPAGE}
+            element={<AdminTeacherPage />}
+          />
+        </Route>
       </Route>
     </Routes>
   );
